@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Auto Tab Switcher</title>
+  <style>
+    :root {
+      --accent: #007aff;
+      --bg-light: #f2f2f7;
+      --bg-dark: #1e1e1e;
+      --text-dark: #000;
+      --text-light: #eee;
+      --muted-light: #8e8e93;
+      --muted-dark: #bbb;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      width: 280px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background-image: url("light.png");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      color: var(--text-dark);
+      transition: background-image 0.3s ease;
+      position: relative;
+    }
+
+    body.dark {
+      background-image: url("dark.png");
+      color: var(--text-light);
+    }
+
+    .container {
+      padding: 14px;
+    }
+
+    .card {
+      background-color: rgba(255, 255, 255, 0.35);
+      border-radius: 12px;
+      padding: 16px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      backdrop-filter: blur(15px);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      opacity: 0;
+      transform: translateY(10px);
+      animation: fadeSlideIn 0.5s ease forwards;
+    }
+
+    @keyframes fadeSlideIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .dark .card {
+      background-color: rgba(44, 44, 44, 0.35);
+    }
+
+    .title {
+      font-size: 16px;
+      font-weight: 600;
+      text-align: center;
+      color: var(--accent);
+    }
+
+    .field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .label-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+    }
+
+    .small-input {
+      width: 70px;
+      padding: 6px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      text-align: center;
+      background-color: #fff;
+      color: var(--text-dark);
+    }
+
+    .dark .small-input {
+      background-color: #333;
+      color: var(--text-light);
+      border: 1px solid #555;
+    }
+
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 30px;
+      height: 18px;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      inset: 0;
+      background: #ccc;
+      border-radius: 34px;
+      transition: 0.3s;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 12px;
+      width: 12px;
+      left: 3px;
+      bottom: 3px;
+      background: white;
+      border-radius: 50%;
+      transition: 0.3s;
+    }
+
+    input:checked + .slider {
+      background-color: var(--accent);
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(12px);
+    }
+
+    button {
+      background: var(--accent);
+      color: #fff;
+      padding: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #005ecb;
+    }
+
+    .status {
+      text-align: center;
+      font-weight: 600;
+      font-size: 13px;
+    }
+
+    .status.enabled {
+      color: green;
+    }
+
+    .status.disabled {
+      color: red;
+    }
+
+    .footer {
+      margin-top: 12px;
+      font-size: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--muted-light);
+    }
+
+    .footer .footer-label {
+      font-size: 12px;
+    }
+
+    .dark .footer {
+      color: var(--muted-dark);
+    }
+
+    .dark .status {
+      color: var(--muted-dark);
+    }
+
+    .theme-toggle {
+      cursor: pointer;
+      font-size: 18px;
+      user-select: none;
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      transition: transform 0.3s ease;
+    }
+
+    .theme-toggle.animate {
+      transform: rotate(360deg);
+    }
+  </style>
+</head>
+
+<body id="body">
+  <div class="container">
+    <div class="card">
+      <div class="title">Auto Tab Switcher</div>
+
+      <div class="field-group">
+        <div class="label-row">
+          <label for="seconds">Switch Interval (sec):</label>
+          <input id="seconds" type="number" min="1" value="5" class="small-input" />
+        </div>
+
+        <div class="label-row">
+          <label for="refresh">Enable Refresh</label>
+          <label class="switch">
+            <input type="checkbox" id="refresh">
+            <span class="slider"></span>
+          </label>
+        </div>
+      </div>
+
+      <button id="enable">Enable</button>
+
+      <div id="status" class="status disabled">Disabled</div>
+      <span class="theme-toggle" id="themeToggle">☀️</span>
+    </div>
+  </div>
+
+  
+
+  <script src="popup.js"></script>
+</body>
+</html>
