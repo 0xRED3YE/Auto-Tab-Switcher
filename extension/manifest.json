@@ -1,0 +1,33 @@
+{
+  "manifest_version": 3,
+  "name": "Auto Tab Switcher",
+  "description": "Automatically cycles through your open tabs and can refresh them, ideal for dashboards and monitoring screens.",
+  "author": "0xRED3YE",
+  "homepage_url": "https://github.com/0xRED3YE/Auto-Tab-Switcher",
+  "version": "2.1.0",
+  "minimum_chrome_version": "120",
+  "permissions": ["storage", "alarms", "idle"],
+  "icons": {
+    "16": "icons/icon-off-16.png",
+    "48": "icons/icon-off-48.png",
+    "128": "icons/icon-off-128.png"
+  },
+  "action": {
+    "default_icon": {
+      "16": "icons/icon-off-16.png",
+      "48": "icons/icon-off-48.png",
+      "128": "icons/icon-off-128.png"
+    },
+    "default_title": "Auto Tab Switcher",
+    "default_popup": "popup.html"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "commands": {
+    "toggle-rotation": {
+      "suggested_key": { "default": "Alt+Shift+R" },
+      "description": "Start / stop switching tabs"
+    }
+  }
+}
